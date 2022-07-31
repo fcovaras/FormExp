@@ -651,7 +651,7 @@ namespace FormExp
 
                     
 
-                    xlWorkBook.SaveAs(ruta, formato_salida, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared, misValue, misValue, misValue, misValue, misValue);
+                    xlWorkBook.SaveAs(ruta, formato_salida, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, misValue, misValue, misValue, misValue, misValue);
                     xlWorkBook.Close(true, misValue, misValue);
                     xlApp.Quit();
 

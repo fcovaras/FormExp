@@ -1,0 +1,10 @@
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\bin\Release\FormExp.exe.config
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\bin\Release\FormExp.exe
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\bin\Release\FormExp.pdb
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\obj\Release\ExpDataSet2Excel.csprojAssemblyReference.cache
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\obj\Release\FormExp.FormExp.resources
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\obj\Release\FormExp.Properties.Resources.resources
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\obj\Release\ExpDataSet2Excel.csproj.GenerateResource.cache
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\obj\Release\ExpDataSet2Excel.csproj.CoreCompileInputs.cache
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\obj\Release\FormExp.exe
+W:\Modulos Winper\FormExp\FormExp\WindowsFormsApp1\obj\Release\FormExp.pdb
