@@ -1,0 +1,11 @@
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\bin\Debug\FormExp.exe.config
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\bin\Debug\FormExp.exe
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\bin\Debug\FormExp.pdb
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\obj\Debug\ExpDataSet2Excel.csproj.AssemblyReference.cache
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\obj\Debug\ExpDataSet2Excel.csproj.SuggestedBindingRedirects.cache
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\obj\Debug\FormExp.FormExp.resources
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\obj\Debug\FormExp.Properties.Resources.resources
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\obj\Debug\ExpDataSet2Excel.csproj.GenerateResource.cache
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\obj\Debug\ExpDataSet2Excel.csproj.CoreCompileInputs.cache
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\obj\Debug\FormExp.exe
+E:\Visual Studio\2022\FormExp\WindowsFormsApp1\obj\Debug\FormExp.pdb

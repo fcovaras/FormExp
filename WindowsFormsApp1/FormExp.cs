@@ -75,7 +75,6 @@ namespace FormExp
                 formato_salida = (int)Excel.XlFileFormat.xlWorkbookDefault;
 
 
-
             this.Show();
             this.BringToFront();
 
@@ -670,7 +669,7 @@ namespace FormExp
                     System.Windows.Forms.Application.Exit();
                 }
                 
-                }
+            }
         }
 
         private void AplicaBordes(Excel.Range range)
