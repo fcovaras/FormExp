@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpDataSet2Excel", "ExpDataSet2Excel.csproj", "{AEC6E7E4-F0E4-4443-9B07-4857ED3A458B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpDataSet2ExcelAnt", "ExpDataSet2ExcelAnt.csproj", "{AEC6E7E4-F0E4-4443-9B07-4857ED3A458B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpDataSet2ExcelV2", "..\ExpDataSet2ExcelV2\ExpDataSet2ExcelV2.csproj", "{C76F13C5-D976-4EE7-9FC7-932E4AF63763}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpDataSet2Excel", "..\ExpDataSet2ExcelV2\ExpDataSet2Excel.csproj", "{C76F13C5-D976-4EE7-9FC7-932E4AF63763}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

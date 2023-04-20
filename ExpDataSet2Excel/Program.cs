@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ExpDataSet2ExcelV2
+namespace ExpDataSet2Excel
 {
     internal static class Program
     {
@@ -17,9 +17,9 @@ namespace ExpDataSet2ExcelV2
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if (args.Length > 0)
-                Application.Run(new FormExpV2(args));
+                Application.Run(new FormExp(args));
             else
-                Application.Run(new FormExpV2());
+                Application.Run(new FormExp());
         }
     }
 }

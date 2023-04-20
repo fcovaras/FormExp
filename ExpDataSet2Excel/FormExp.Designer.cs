@@ -1,6 +1,6 @@
-﻿namespace ExpDataSet2ExcelV2
+﻿namespace ExpDataSet2Excel
 {
-    partial class FormExpV2
+    partial class FormExp
     {
         /// <summary>
         /// Variable del diseñador necesaria.

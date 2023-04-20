@@ -14,9 +14,9 @@ using DocumentFormat.OpenXml.Office2010.PowerPoint;
 using DocumentFormat.OpenXml.Spreadsheet;
 using SpreadsheetLight;
 
-namespace ExpDataSet2ExcelV2
+namespace ExpDataSet2Excel
 {
-    public partial class FormExpV2 : Form
+    public partial class FormExp : Form
     {
         public string tabla;
         public string orden;
@@ -126,12 +126,12 @@ namespace ExpDataSet2ExcelV2
         }
 
 
-        public FormExpV2(string[] parametros)
+        public FormExp(string[] parametros)
         {
             InitializeComponent();
         }
 
-        public FormExpV2()
+        public FormExp()
         {
             InitializeComponent();
         }
