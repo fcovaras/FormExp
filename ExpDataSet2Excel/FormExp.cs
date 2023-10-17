@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DocumentFormat.OpenXml.Office2010.PowerPoint;
@@ -33,22 +34,24 @@ namespace ExpDataSet2Excel
         public int nTotal = 0;
         public decimal nTotAntic = 0;
 
+        protected string separadorMiles = string.Empty;
+        protected string separadorDecimales = string.Empty;
         public class Celda
         {
             public string columna { get; set; }
 
             public int fila { get; set; }
 
-            public string celdaFmt { get 
+            public string celdaFmt { get
                 {
                     return columna + fila.ToString();
                 }
             }
 
-            public string siguienteColumna{ get
+            public string siguienteColumna { get
                 {
                     return GetNextColumn(columna);
-                } 
+                }
             }
 
             public string anteriorColumna
@@ -62,7 +65,7 @@ namespace ExpDataSet2Excel
             public int siguienteFila { get
                 {
                     return fila + 1;
-                } 
+                }
             }
             public int anteriorFila
             {
@@ -96,7 +99,7 @@ namespace ExpDataSet2Excel
                 columnNumber = (columnNumber - modulo) / 26;
             }
 
-            return nextColumn; 
+            return nextColumn;
         }
 
         /// <summary>
@@ -122,7 +125,7 @@ namespace ExpDataSet2Excel
                 columnNumber = (columnNumber - modulo) / 26;
             }
 
-            return nextColumn; 
+            return nextColumn;
         }
 
 
@@ -185,14 +188,242 @@ namespace ExpDataSet2Excel
                 System.Windows.Forms.Application.Exit();
             }
 
+            CultureInfo cultureInfo = CultureInfo.CurrentCulture;
+            NumberFormatInfo numberFormatInfo = cultureInfo.NumberFormat;
+
+            // Obtener el separador de miles y el separador de decimales
+            separadorMiles = numberFormatInfo.NumberGroupSeparator;
+            separadorDecimales = numberFormatInfo.NumberDecimalSeparator;
+
             if (formato == "")
                 Excel_plano(sender, e);
             else if (formato == "A")
                 Excel_formato(sender, e);
             else if (formato == "L")
                 Excel_formato(sender, e);
+            else if (formato == "C")
+                Excel_form_contable(sender, e);
             else
                 Excel_plano(sender, e);
+        }
+
+   
+
+        private bool EsFecha(string campo, out DateTime fechaObj)
+        {
+            return DateTime.TryParse(campo, out fechaObj);
+        }
+
+        private string RepetirCaracter(char caracter, int largoDecimales)
+        {
+            return new string(caracter, largoDecimales);
+        }
+
+        private bool EsDecimal(string s, out decimal d)
+        {
+            string pattern = @"^\d{1,3}(?:\" + separadorMiles + @"\d{3})*(?:" + separadorDecimales + @"\d+)?$";
+            Regex regex = new Regex(pattern);
+
+            var numero = s.Replace(".", ",");
+
+            if (regex.IsMatch(numero))
+            {
+                //numero = numero.Replace(separadorMiles, "").Replace(separadorDecimales, ".");
+                return decimal.TryParse(numero, out d);
+            }
+
+            string[] token = numero.Split(separadorDecimales[0]);
+            if (token.Length == 2)
+            {
+                int i = 0;
+                if (int.TryParse(token[0], out i) && int.TryParse(token[1], out i))
+                {
+                    d = decimal.Parse(numero);
+                    return true;
+                }
+            }
+
+            d = 0;
+            return false;
+
+            }
+
+
+
+
+        private void Excel_form_contable(object sender, EventArgs e)
+        {
+            CultureInfo currenCultureInfo = new CultureInfo("es-CL");
+            //MessageBox.Show("formato contable", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string queryString = "SELECT * FROM " + tabla + (String.IsNullOrEmpty(orden) ? String.Empty : " order by " + orden);
+            string queryString2 = "SELECT count(*) FROM " + tabla;
+            int fila = 0;
+            int columna = 0;
+            int rowCount = 0;
+            try
+            {
+
+                txtArchivo.Text = ruta;
+                progressBar1.Value = 0;
+                this.Refresh();
+
+                using (OdbcConnection connection = new OdbcConnection("DSN=" + basedatos + ";Uid=" + usuario + ";Pwd=" + clave + ";"))
+                {
+                    connection.Open();
+                    using (OdbcCommand command2 = new OdbcCommand(queryString2, connection))
+                    {
+                        object result = command2.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            rowCount = Convert.ToInt32(result);
+                        }
+                    }
+                    connection.Close();
+
+                    connection.Open();
+                    using (OdbcCommand command = new OdbcCommand(queryString, connection))
+                    using (OdbcDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            SLDocument oArchivoExc = new SLDocument();
+                            SLStyle style = oArchivoExc.CreateStyle();
+                            style = oArchivoExc.CreateStyle();
+                            style.Font.Bold = true;
+
+                            txtTotalRegistro.Text = rowCount.ToString();
+                            labelAviso.Text = "Exportando registros...";
+                            // Imprimir encabezados de columna
+                            StringBuilder headerBuilder = new StringBuilder();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                if (i > 0)
+                                {
+                                    headerBuilder.Append("|");
+                                }
+                                headerBuilder.Append(reader.GetName(i)); // Agregar el nombre de la columna
+                            }
+                            string header = headerBuilder.ToString();
+                            //Console.WriteLine(header);
+
+                            string[] columnas = header.Split(new Char[] { '|' });
+                            columna = 0;
+                            foreach (string col in columnas)
+                            {
+                                oArchivoExc.SetCellValue(fila + 1, columna + 1, col);
+                                style.Font.Bold = true;
+                                oArchivoExc.SetCellStyle(fila + 1, columna + 1, style);
+                                columna++;
+                            }
+
+                            // Imprimir los datos
+                            fila++;
+                            while (reader.Read())
+                            {
+                                txtNroRegistro.Text = (fila).ToString();
+                                progressBar1.Value = ((fila) * 100) / int.Parse(txtTotalRegistro.Text);
+                                this.Refresh();
+
+                                StringBuilder rowBuilder = new StringBuilder();
+                                // Concatenar las columnas con el delimitador "|"
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    if (i > 0)
+                                    {
+                                        rowBuilder.Append("|");
+                                    }
+                                    rowBuilder.Append(reader[i]);
+                                }
+                                string row = rowBuilder.ToString();
+                                //Console.WriteLine(row);
+
+                                string[] filas = row.Split(new Char[] { '|' });
+                                columna = 0;
+
+
+                                foreach (string campo in filas)
+                                {
+                                    int nro = 0;
+                                    decimal nro2 = 0;
+                                    DateTime FechaObj = DateTime.Now;
+
+                                    if (EsNumero(campo, out nro))
+                                    {
+                                        oArchivoExc.SetCellValue(fila + 1, columna + 1, nro);
+                                    }
+                                    else if (EsDecimal(campo, out nro2))
+                                    {
+                                        if (nro2 - Math.Truncate(nro2) > 0)
+                                        {
+                                            style.FormatCode = "#,##0.0000";
+                                        }
+                                        else
+                                        {
+                                            // style.FormatCode = "#,##0";
+                                            style.RemoveFormatCode();
+                                        }
+                                        oArchivoExc.SetCellStyle(fila + 1, columna + 1, style);
+                                        oArchivoExc.SetCellValue(fila + 1, columna + 1, nro2);
+                                        //style.FormatCode = "#" + separadorMiles + "##0" + separadorDecimales + RepetirCaracter('0', 4); // Establecer formato de numero
+                                        style.Font.Bold = false;
+                                        
+                                       
+                                    }
+                                    else if (EsFecha(campo, out FechaObj))
+                                    {
+
+                                        oArchivoExc.SetCellValue(fila + 1, columna + 1, FechaObj);
+                                        if (campo.IndexOf("/") > 0)
+                                        {
+                                            style.FormatCode = "dd/MM/yyyy";
+                                            //style.FormatCode = "dd\\/mm\\/yyyy"; // Establecer formato de fecha
+                                        }
+                                        else
+                                        {
+                                            style.FormatCode = "dd-mm-yyyy"; // Establecer formato de fecha
+                                        }
+                                        style.Font.Bold = false;
+                                        oArchivoExc.SetCellStyle(fila + 1, columna + 1, style);
+
+                                    }
+                                    else oArchivoExc.SetCellValue(fila + 1, columna + 1, campo);
+                                    columna++;
+                                }
+                                fila++;
+                            }
+
+                            labelAviso.Text = "Generando archivo Excel...";
+                            this.Refresh();
+
+                            oArchivoExc.RenameWorksheet(SLDocument.DefaultFirstSheetName, "Planilla");
+                            oArchivoExc.SaveAs(ruta);
+
+                            labelAviso.Text = "Excel generado exitosamente";
+                            this.Refresh();
+
+                            MessageBox.Show("Ha Finalizado exportación de Archivo " + ruta, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            this.Close();
+                            System.Windows.Forms.Application.Exit();
+                        }
+                        else
+                        {
+                            Console.WriteLine("No se encontraron datos.");
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
+        }
+        private bool EsNumero(string campo, out int nro)
+        {
+            return int.TryParse(campo, out nro);
         }
 
         private void Excel_plano(object sender, EventArgs e)
@@ -241,7 +472,7 @@ namespace ExpDataSet2Excel
                             dt.Columns.Add(dataSet.Tables[0].Columns[j].ColumnName, dataSet.Tables[0].Columns[j].DataType);
                         }
 
-                        labelAviso.Text = "Exportando registros ...";
+                        labelAviso.Text = "Exportando registros...";
                         this.Refresh();
 
                         SLStyle style = oDocument.CreateStyle();
@@ -257,10 +488,12 @@ namespace ExpDataSet2Excel
                                 if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType() == System.Type.GetType("System.DateTime"))
                                 {
                                     style.FormatCode = "dd/mm/yyyy";
-                                    oDocument.SetColumnStyle(j+1, style);
+                                    oDocument.SetColumnStyle(j + 1, style);
                                 }
                                 else if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType() == System.Type.GetType("System.String"))
+                                {
                                     style.FormatCode = "";
+                                }
                                 else if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType() == System.Type.GetType("System.Decimal"))
                                 {
                                     if (Decimal.Parse(dataSet.Tables[0].Rows[i].ItemArray[j].ToString()) - Math.Truncate(Decimal.Parse(dataSet.Tables[0].Rows[i].ItemArray[j].ToString())) > 0)
@@ -271,12 +504,16 @@ namespace ExpDataSet2Excel
                                     {
                                         style.FormatCode = "#,##0";
                                     }
-                                    oDocument.SetColumnStyle(j+1, style);
+                                    oDocument.SetColumnStyle(j + 1, style);
                                 }
                                 else if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType() == System.Type.GetType("System.Int32"))
                                 {
                                     style.FormatCode = "#,##0";
-                                    oDocument.SetColumnStyle(j + 1, style);
+                                    oDocument.SetColumnStyle(j + 1, style); 
+                                }
+                                else if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType().Name == "DBNull")
+                                {
+                                    style.FormatCode = "";
                                 }
                                 else
                                 {
@@ -289,7 +526,7 @@ namespace ExpDataSet2Excel
                             dt.Rows.Add(row);
                         }
 
-                        labelAviso.Text = "Generando archivo Excel ...";
+                        labelAviso.Text = "Generando archivo Excel...";
                         this.Refresh();
 
                         oDocument.ImportDataTable(1, 1, dt, true);

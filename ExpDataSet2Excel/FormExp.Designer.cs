@@ -42,9 +42,8 @@
             this.labelAviso.AutoSize = true;
             this.labelAviso.Location = new System.Drawing.Point(18, 10);
             this.labelAviso.Name = "labelAviso";
-            this.labelAviso.Size = new System.Drawing.Size(188, 13);
+            this.labelAviso.Size = new System.Drawing.Size(0, 13);
             this.labelAviso.TabIndex = 7;
-            this.labelAviso.Text = "Exportando a Excel...por favor espere.";
             // 
             // progressBar1
             // 
@@ -97,7 +96,7 @@
             this.txtArchivo.Size = new System.Drawing.Size(485, 20);
             this.txtArchivo.TabIndex = 9;
             // 
-            // FormExpV2
+            // FormExp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -112,9 +111,9 @@
             this.Controls.Add(this.labelAviso);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormExpV2";
+            this.Name = "FormExp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Exportación a Excel";
+            this.Text = "Exportación a Excel v2";
             this.Load += new System.EventHandler(this.FormExpV2_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
