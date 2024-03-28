@@ -88,7 +88,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(188, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Exportando a Excel...por favor espere.";
+            this.label1.Text = "Exportando a Excel. .por favor espere.";
             // 
             // progressBar1
             // 
@@ -126,7 +126,7 @@
             this.MinimizeBox = false;
             this.Name = "FormExp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Exportación Excel";
+            this.Text = "Exportación Excel v1";
             this.Load += new System.EventHandler(this.FormExp_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

@@ -491,9 +491,7 @@ namespace ExpDataSet2Excel
                                     oDocument.SetColumnStyle(j + 1, style);
                                 }
                                 else if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType() == System.Type.GetType("System.String"))
-                                {
                                     style.FormatCode = "";
-                                }
                                 else if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType() == System.Type.GetType("System.Decimal"))
                                 {
                                     if (Decimal.Parse(dataSet.Tables[0].Rows[i].ItemArray[j].ToString()) - Math.Truncate(Decimal.Parse(dataSet.Tables[0].Rows[i].ItemArray[j].ToString())) > 0)
@@ -509,11 +507,7 @@ namespace ExpDataSet2Excel
                                 else if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType() == System.Type.GetType("System.Int32"))
                                 {
                                     style.FormatCode = "#,##0";
-                                    oDocument.SetColumnStyle(j + 1, style); 
-                                }
-                                else if (dataSet.Tables[0].Rows[i].ItemArray[j].GetType().Name == "DBNull")
-                                {
-                                    style.FormatCode = "";
+                                    oDocument.SetColumnStyle(j + 1, style);
                                 }
                                 else
                                 {

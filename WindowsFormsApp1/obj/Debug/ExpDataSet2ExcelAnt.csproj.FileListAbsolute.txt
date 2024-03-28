@@ -1,0 +1,10 @@
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\bin\Debug\FormExp.exe.config
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\bin\Debug\FormExp.exe
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\bin\Debug\FormExp.pdb
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\obj\Debug\FormExp.FormExp.resources
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\obj\Debug\FormExp.Properties.Resources.resources
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\obj\Debug\ExpDataSet2ExcelAnt.csproj.GenerateResource.cache
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\obj\Debug\ExpDataSet2ExcelAnt.csproj.CoreCompileInputs.cache
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\obj\Debug\FormExp.exe
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\obj\Debug\FormExp.pdb
+C:\Desarrollo\repowp\FormExp\WindowsFormsApp1\obj\Debug\ExpDataSet2ExcelAnt.csproj.AssemblyReference.cache

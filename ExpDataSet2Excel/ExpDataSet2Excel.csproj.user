@@ -4,7 +4,7 @@
     <StartArguments>"des_ipchile" "admwinpe" "admwinpe" "inf_hyd_kriveros" "  3 " "E:\paso\exportacionv2.xlsx"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>"qa_ipchile_urano" "admwinpe" "admwinpe" "inf_hyd_kriveros" "" "W:\Modulos Winper\informes_de_liquidacion_TLS\habdes.xlsx"</StartArguments>
+    <StartArguments>"DESA17" "admwinpe" "admwinpe" "temp_planilla_contable" "5" "C:\Desarrollo\repowp\contabilizacion_nueva\PLANILLA_CONT6.xlsx" "C"</StartArguments>
   </PropertyGroup>
   <PropertyGroup>
     <PublishUrlHistory>publish\</PublishUrlHistory>
